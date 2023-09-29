@@ -24,7 +24,8 @@ class MyThread extends Thread {
     @Override
     public void run() {
         try {
-            DatabaseUtil.runInsert(this.conn, 1, ThreadLocalRandom.current().nextInt(2) + 1);
+//            DatabaseUtil.runInsert(this.conn, 1, ThreadLocalRandom.current().nextInt(2) + 1);
+            DatabaseUtil.runInsert(this.conn, 1, 1);
         } catch (SQLException e) {
             System.out.println(currentThread().getName() + " --> " + e.getMessage());
         } finally {
@@ -69,13 +70,14 @@ public class Main {
         for (int i=0;i<n;i++) {
             list.add(new MyThread(i,null));
         }
+        long start = System.currentTimeMillis();
         for (int i=0;i<n;i++) {
             list.get(i).start();
         }
 
         for (int i=0;i<n;i++)
                 list.get(i).join();
-
+        System.out.println("Total time: " + Long.toString(System.currentTimeMillis() - start));
         System.out.println("System exited");
     }
 }
