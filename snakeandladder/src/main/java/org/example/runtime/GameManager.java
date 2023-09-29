@@ -17,12 +17,10 @@ public class GameManager {
     Admin admin;
     private int initialNumberOfPlayers;
     List<Move> moves;
-    boolean isGameRunning;
     Player lastPlayer;
     int playerHasPlayed;
     public GameManager() {
         this.admin = new Admin(this);
-        this.isGameRunning = false;
     }
 
 
@@ -41,7 +39,6 @@ public class GameManager {
         // initializing board
         this.config = this.admin.getConfig();
         this.board = new Board(this.config);
-        this.isGameRunning = true;
         start();
     }
 
@@ -72,6 +69,10 @@ public class GameManager {
                 System.out.println("Invalid move: by " + player.getName() + " to " + player.getCurrentCell() + dice);
             }
             applyPostAction(player);
+            if (player.getCurrentCell() == totalCell) {
+                System.out.println("Player " + player.getName() + " won");
+                break;
+            }
             this.players.add(player);
         }
     }
